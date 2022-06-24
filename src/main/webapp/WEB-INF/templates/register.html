@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+    </script>
+</head>
+<body>
+
+<input name="empName" type="text" value="张小凡同学"/>
+<input name="empPosition" type="text" value="minister"/>
+<input type="text" name="loginAccount" value="zhangxiaofan">
+<input type="text" name="loginPassword" value="123456">
+<button id="submit">提交</button>
+<script>
+    $("#submit").click(function(){
+        alert(1)
+        var obj = {
+            empName: $("input[name='empName']").val(),
+            empPosition: $("input[name='empPosition']").val(),
+            loginAccount: $("input[name='loginAccount']").val(),
+            loginPassword: $("input[name='loginPassword']").val()
+        }
+        $.ajax({
+            url: "http://localhost:8081/ssmProject/user/register",
+            dataType: "json",
+            method: 'post',
+            data:JSON.stringify(obj),
+            contentType: "application/json",
+            success: function(response) {
+                console.log(response);
+                if (response.code == 200) {
+                    alert("添加成功")
+                }
+            },error:function(){
+
+            }
+        })
+    })
+</script>
+<!--<script th:src="@{/static/js/md5.js}"></script>-->
+</body>
+</html>

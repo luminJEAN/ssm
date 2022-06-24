@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+    </script>
+</head>
+<body>
+用户:
+<p th:text="${session.loginUser.empName}"></p>
+
+<div>
+    <div>奏折标题</div>
+    <input type="text" name="memorialsTitle" id="memorialsTitle"/>
+</div>
+<div>
+    <div>上疏大臣</div>
+    <input type="text" name="empName" id="empName"/>
+</div>
+<div>
+    <div>上疏时间</div>
+    <input type="text" name="memorialsCreateTime" id="memorialsCreateTime"/>
+</div>
+<div>
+    <div>奏折内容</div>
+    <input type="text" name="memorialsContent" id="memorialsContent"/>
+</div>
+    <button id="submit" type="submit">提交</button>
+
+<script>
+    $(document).ready(function(){
+        $("#submit").click(function(){
+            var obj = {
+                memorialsTitle: $("#memorialsTitle").val(),
+                empName: $("#empName").val(),
+                empId: $("#empId").val(),
+                memorialsCreateTime: $("#memorialsCreateTime").val(),
+                memorialsContent: $("#memorialsContent").val()
+            }
+            $.ajax({
+                url: "http://localhost:8081/ssmProject/memorials/addMemorials",
+                dataType: "json",
+                method: 'post',
+                data:JSON.stringify(obj),
+                contentType: "application/json",
+                success: function(response) {
+                   console.log(response);
+                    debugger
+                    if (response.code == 200) {
+                        alert("添加成功")
+                    }
+                },error:function(){
+
+                }
+            })
+        });
+    })
+</script>
+</body>
+</html>

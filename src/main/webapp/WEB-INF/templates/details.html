@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+用户:
+<p th:text="${session.loginUser.empName}"></p>
+<table>
+    <tbody>
+        <tr>
+            <td>奏折标题</td>
+            <td th:text="${details.memorialsTitle}"></td>
+        </tr>
+        <tr>
+            <td>上疏大臣</td>
+            <td th:text="${details.empName}"></td>
+        </tr>
+        <tr>
+            <td>上疏时间</td>
+            <td th:text="${details.memorialsCreateTime}"></td>
+        </tr>
+        <tr>
+            <td>奏折内容</td>
+            <td th:text="${details.memorialsContent}"></td>
+        </tr>
+        <tr>
+            <td>批复内容</td>
+            <td th:text="${details.feedbackContent}"></td>
+        </tr>
+        <tr>
+            <td>批复时间</td>
+            <td th:text="${details.feedbackTime}"></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

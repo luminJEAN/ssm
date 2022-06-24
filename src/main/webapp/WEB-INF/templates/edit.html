@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+用户:
+<p th:text="${session.loginUser.empName}"></p>
+<form  th:action="@{/memorials/editMemorials}" method="post">
+    <input type="hidden" name="memorialsId" th:value="${details.memorialsId}"/>
+<div>
+    <div>奏折标题</div>
+    <input type="text" name="memorialsTitle" th:value="${details.memorialsTitle}"/>
+</div>
+<div>
+    <div>上疏大臣</div>
+    <input type="hidden" name="empId" th:value="${details.empId}"/>
+    <input type="text" name="empName" th:value="${details.empName}"/>
+</div>
+<div>
+    <div>上疏时间</div>
+    <input type="text" name="memorialsCreateTime" th:value="${details.memorialsCreateTime}"/>
+</div>
+<div>
+    <div>奏折内容</div>
+    <input type="text" name="memorialsContent" th:value="${details.memorialsContent}"/>
+</div>
+<div th:if="${details.memorialsStatus} == 2">
+    <div>
+        <div>批复内容</div>
+        <textarea name="feedbackContent" th:value="${details.feedbackContent}"></textarea>
+    </div>
+    <div>
+        <div>批复时间</div>
+        <input type="text" name="feedbackTime" th:value="${details.feedbackTime}"/>
+    </div>
+</div>
+<div th:if="${details.memorialsStatus} != 2">
+    <div>
+        <div>批复内容</div>
+        <textarea name="feedbackContent"></textarea>
+    </div>
+</div>
+<div th:text="${details.memorialsStatus}"></div>
+<input type="submit" value="提交">
+
+</form>
+
+</body>
+</html>

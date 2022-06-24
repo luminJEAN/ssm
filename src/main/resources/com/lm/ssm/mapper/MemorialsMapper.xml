@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lm.ssm.mapper.MemorialsMapper">
+    <sql id="memorialsColumns">memorials_id memorialsId,memorials_title memorialsTitle,memorials_content memorialsContent,
+t_memorials.emp_id empId,emp_name empName,memorials_create_time memorialsCreateTime,feedback_time feedbackTime,
+feedback_content feedbackContent,memorials_status memorialsStatus</sql>
+
+<!--    List<Memorials> getMemorialsAllByPage(int currentPage,int size,String query);-->
+    <select id="getMemorialsAllByPage" resultType="com.lm.ssm.entity.Memorials">
+        select <include refid="memorialsColumns"></include>
+        from t_memorials left join t_emp on t_memorials.emp_id = t_emp.emp_id
+        where 1=1
+        limit #{currentPage},#{size};
+    </select>
+    <!--      List<Memorials> getMemorialsAll(Memorials memorials);-->
+    <select id="getMemorialsAll" resultType="com.lm.ssm.entity.Memorials">
+        select <include refid="memorialsColumns"></include>
+        from t_memorials left join t_emp on t_memorials.emp_id = t_emp.emp_id
+        where 1=1
+        <if test="memorialsTitle != null and memorialsTitle !=''">
+            and memorials_title = #{memorialsTitle}
+        </if>
+        <if test="memorialsContent != null and memorialsContent !=''">
+            and memorials_content like "%"#{memorialsContent}"%"
+        </if>
+        <if test="empName != null and empName !=''">
+            and emp_name = #{empName}
+        </if>
+        <if test="empId != null and empId !='' and empId != 1">
+            and t_memorials.emp_id = #{empId}
+        </if>
+    </select>
+    <!--    Memorials getMemorialsById(@Param("id") String id);-->
+    <select id="getMemorialsById" resultType="com.lm.ssm.entity.Memorials">
+        select <include refid="memorialsColumns"></include>
+        from t_memorials left join t_emp on t_memorials.emp_id = t_emp.emp_id where memorials_id =#{id};
+    </select>
+    <!--     int saveMemorials(Memorials memorials);;-->
+    <insert id="saveMemorials">
+        INSERT into t_memorials (memorials_title,memorials_content,emp_id,memorials_create_time,feedback_time,feedback_content,memorials_status)
+        values (#{memorialsTitle},#{memorialsContent},#{empId},#{memorialsCreateTime},#{feedbackTime},#{feedbackContent},#{memorialsStatus})
+    </insert>
+    <!--      int deleteMemorials(@Param("id") String id);-->
+    <delete id="deleteMemorials">
+        delete from t_memorials where memorials_id =#{id}
+    </delete>
+    <!--   int updateMemorials(Memorials memorials);;-->
+    <update id="updateMemorials">
+        update t_memorials set memorials_title = #{memorialsTitle},memorials_content = #{memorialsContent},emp_id = #{empId},
+                         memorials_create_time = #{memorialsCreateTime},feedback_time = #{feedbackTime},
+                         feedback_content = #{feedbackContent}, memorials_status = #{memorialsStatus} where memorials_id =#{memorialsId}
+    </update>
+
+    <!--  int applyMemorials(String id, String requestBody) ;-->
+    <update id="applyMemorials">
+        update t_emp set memorials_title = #{memorialsTitle},memorials_content = #{memorialsContent},emp_id = #{empId},
+                         memorials_create_time = #{memorialsCreateTime},feedback_time = #{feedbackTime},
+                         feedback_content = #{feedbackContent}, memorials_status = #{memorialsStatus} where memorials_id =#{id}
+    </update>
+
+</mapper>
